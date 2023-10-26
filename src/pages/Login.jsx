@@ -1,12 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import loginSvg from "../assets/images/login.svg";
 import "../components/Navbar/Login.css";
 import styled from "styled-components";
+import { EnvVariables } from "../data";
 const Input = styled.input`
   font-family: "Poppins", sans-serif;
 `;
 
 const Login = () => {
+  const [inpValid, setInpValid] = useState(false);
+  const [emailValid, setEmailValid] = useState(true);
+  const [passIsValid, setPassIsValid] = useState(false);
+  const defaultFields = {
+    email: "",
+    password: "",
+  };
+  const [inpFields, setInpFields] = useState(defaultFields);
+
+  const onChangeHandler = (e) => {
+    setInpValid(false);
+    const val = e.target.value;
+    const id = e.target.id;
+    if (id === "email") {
+      setEmailValid(false);
+    }
+    setInpFields({ ...inpFields, [id]: val });
+    if (emailValid) {
+      if (id === "password" && val.trim().length > 5) {
+        setInpValid(true);
+      }
+    }
+  };
+
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
+  const emailOnBlurHandler = () => {
+    if (validateEmail(inpFields.email)) {
+      setEmailValid(true);
+    }
+  };
+  const passwordOnBlur = () => {};
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch(
+      `https://recordbook-server.onrender.com/user/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...inpFields }),
+      }
+    );
+    setInpFields({ ...inpFields, password: "" });
+    const data = await res.json();
+    if (res.ok) {
+      setInpFields({ ...defaultFields });
+      setInpValid(false);
+    }
+    console.log(data);
+  };
   return (
     <>
       <div className="container">
@@ -16,13 +76,39 @@ const Login = () => {
               <h2 className="title">Sign in</h2>
               <div className="input-field">
                 <i className="fas fa-user"></i>
-                <Input type="text" placeholder="Username" />
+                <Input
+                  onChange={onChangeHandler}
+                  type="email"
+                  onBlur={emailOnBlurHandler}
+                  placeholder="Email"
+                  id="email"
+                  value={inpFields.email}
+                />
               </div>
               <div className="input-field">
                 <i className="fas fa-lock"></i>
-                <Input type="password" placeholder="Password" />
+                <Input
+                  onChange={onChangeHandler}
+                  type="password"
+                  placeholder="Password"
+                  id="password"
+                  value={inpFields.password}
+                  onBlur={passwordOnBlur}
+                />
               </div>
-              <Input type="submit" value="Login" className="btn solid" />
+              {inpValid && (
+                <Input
+                  onClick={onSubmitHandler}
+                  type="submit"
+                  value="Login"
+                  className="btn solid"
+                />
+              )}
+              {!inpValid && (
+                <button disabled className="btn disabled">
+                  Login
+                </button>
+              )}
             </form>
           </div>
         </div>

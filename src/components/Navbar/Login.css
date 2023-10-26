@@ -391,3 +391,13 @@ form.sign-in-form {
 .signupBtn {
   visibility: hidden;
 }
+
+.disabled {
+  background-color: rgb(217, 217, 217);
+  text-align: center;
+}
+
+.disabled:hover {
+  background-color: rgb(217, 217, 217);
+  text-align: center;
+}

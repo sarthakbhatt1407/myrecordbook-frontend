@@ -1,0 +1,17 @@
+import { createStore } from "redux";
+const defaultState = {
+  userId: "",
+  userEmail: "",
+  isLoggedIn: "",
+};
+const storeReducer = (state = defaultState, action) => {
+  if (action.type === "logout") {
+    localStorage.clear();
+    return { ...defaultState };
+  }
+
+  return state;
+};
+const reduxStore = createStore(storeReducer);
+
+export default reduxStore;
