@@ -3,6 +3,7 @@ import "../Navbar/Navbar.css";
 import logo from "../../assets/images/RecordBook.png";
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Logo = styled.img`
   width: 20rem;
@@ -10,7 +11,7 @@ const Logo = styled.img`
 
 function Navbar() {
   const location = useLocation().pathname;
-
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const [active, setActive] = useState("nav__menu");
   const [icon, setIcon] = useState("nav__toggler");
   const navToggle = () => {
@@ -24,62 +25,66 @@ function Navbar() {
     } else setIcon("nav__toggler");
   };
   return (
-    <nav className={location === "/login" ? "loginNav" : "nav"}>
-      <Link className="nav__brand" to="/login">
+    <nav className={!isLoggedIn ? "loginNav" : "nav"}>
+      <Link className="nav__brand" to="/">
         <Logo src={logo} alt="" />
       </Link>
-      <ul className={location === "/login" ? "disableBtn" : `${active}`}>
-        <li className="nav__item">
-          <Link
-            className={location === "/" ? "activeLink" : "nav_link"}
-            onClick={navToggle}
-            to="/"
-          >
-            All Orders
-          </Link>
-        </li>
-        <li className="nav__item">
-          <Link
-            className={
-              location === "/pending-orders" ? "activeLink" : "nav_link"
-            }
-            onClick={navToggle}
-            to="/pending-orders"
-          >
-            Pending
-          </Link>
-        </li>
-        <li className="nav__item">
-          <Link
-            className={
-              location === "/delivered-orders" ? "activeLink" : "nav_link"
-            }
-            onClick={navToggle}
-            to="/delivered-orders"
-          >
-            Delivered
-          </Link>
-        </li>
-        <li className="nav__item">
-          <Link
-            className={
-              location === "/user/all-cards" ? "activeLink" : "nav_link"
-            }
-            onClick={navToggle}
-            to="/user/all-cards"
-          >
-            Cards
-          </Link>
-        </li>
-      </ul>
-      <div
-        className={location === "/login" ? "disableBtn" : `${icon}`}
-        onClick={navToggle}
-      >
-        <div className="line1"></div>
-        <div className="line2"></div>
-        <div className="line3"></div>
-      </div>
+      {isLoggedIn && (
+        <ul className={location === "/login" ? "disableBtn" : `${active}`}>
+          <li className="nav__item">
+            <Link
+              className={location === "/" ? "activeLink" : "nav_link"}
+              onClick={navToggle}
+              to="/"
+            >
+              All Orders
+            </Link>
+          </li>
+          <li className="nav__item">
+            <Link
+              className={
+                location === "/pending-orders" ? "activeLink" : "nav_link"
+              }
+              onClick={navToggle}
+              to="/pending-orders"
+            >
+              Pending
+            </Link>
+          </li>
+          <li className="nav__item">
+            <Link
+              className={
+                location === "/delivered-orders" ? "activeLink" : "nav_link"
+              }
+              onClick={navToggle}
+              to="/delivered-orders"
+            >
+              Delivered
+            </Link>
+          </li>
+          <li className="nav__item">
+            <Link
+              className={
+                location === "/user/all-cards" ? "activeLink" : "nav_link"
+              }
+              onClick={navToggle}
+              to="/user/all-cards"
+            >
+              Cards
+            </Link>
+          </li>
+        </ul>
+      )}
+      {isLoggedIn && (
+        <div
+          className={location === "/login" ? "disableBtn" : `${icon}`}
+          onClick={navToggle}
+        >
+          <div className="line1"></div>
+          <div className="line2"></div>
+          <div className="line3"></div>
+        </div>
+      )}
     </nav>
   );
 }

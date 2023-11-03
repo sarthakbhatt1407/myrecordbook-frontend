@@ -33,6 +33,7 @@ a:hover {
   background: white;
   position: sticky;
   top: 0;
+  z-index: 100;
   box-shadow: 0.2rem 0.2rem 0.4rem #dfdfdf;
 }
 .nav__menu {
@@ -55,6 +56,7 @@ a:hover {
 @media screen and (max-width: 768px) {
   .nav {
     padding: 0 1.5rem;
+    z-index: 21;
   }
   a {
     font-size: 1.9rem;
@@ -86,6 +88,7 @@ a:hover {
 /* Active Class */
 .nav__active {
   transform: translateX(0%);
+  z-index: 100;
 }
 
 /* Toggle Icon Animation */

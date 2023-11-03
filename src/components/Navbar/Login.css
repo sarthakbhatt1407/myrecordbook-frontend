@@ -261,6 +261,7 @@ form.sign-in-form {
   .container {
     min-height: 800px;
     height: 100vh;
+    padding: 0;
   }
   .signin-signup {
     width: 100%;
@@ -293,6 +294,7 @@ form.sign-in-form {
 
   .left-panel {
     grid-row: 1 / 2;
+    margin-top: 3rem;
   }
 
   .image {
@@ -374,9 +376,6 @@ form.sign-in-form {
   .panel .content {
     padding: 0.5rem 1rem;
   }
-  .container {
-    padding: 1.5rem;
-  }
 
   .container:before {
     bottom: 72%;
@@ -397,6 +396,14 @@ form.sign-in-form {
   text-align: center;
 }
 
+.disabledErr {
+  background-color: rgb(230, 60, 60);
+  text-align: center;
+}
+.disabledErr:hover {
+  background-color: rgb(230, 60, 60);
+  text-align: center;
+}
 .disabled:hover {
   background-color: rgb(217, 217, 217);
   text-align: center;
