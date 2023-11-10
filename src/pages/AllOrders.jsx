@@ -4,10 +4,61 @@ import { useDispatch, useSelector } from "react-redux";
 import OrderLoader from "../components/Loader/OrderLoader/OrderLoader";
 import { EnvVariables } from "../data";
 import OrderDetailsBox from "../components/OrderDetailsBox";
-
-const OuterBox = styled.div``;
+import AddNewOrder from "../components/AddNewOrder";
+import "animate.css";
+const OuterBox = styled.div`
+  position: relative;
+`;
+const AddNewDiv = styled.div`
+  position: absolute;
+  backface-visibility: hidden;
+  bottom: 8%;
+  right: 4%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  background-color: #388def;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  animation: 2s zoomInRight;
+  color: white;
+  transition: 0.5s all;
+  overflow: hidden;
+  cursor: pointer;
+  @media only screen and (min-width: 700px) and (max-width: 2200px) {
+    width: 6rem;
+    height: 6rem;
+  }
+  &:hover {
+    width: 15rem;
+    border-radius: 1.2rem;
+    span {
+      display: block;
+      font-size: 1.4rem;
+      animation: 0.7s zoomIn;
+    }
+    p {
+      display: none;
+    }
+  }
+  span {
+    display: none;
+  }
+  p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+  }
+`;
 const MainBox = styled.div`
   padding: 1rem;
+  height: 91vh;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const HeaderBox = styled.div`
   display: flex;
@@ -24,6 +75,9 @@ const HeadingAndFilterBox = styled.div`
   h2 {
     letter-spacing: 0.1rem;
     font-weight: 650;
+    @media only screen and (max-width: 500px) {
+      font-size: 2.1rem;
+    }
   }
   display: flex;
   justify-content: space-between;
@@ -107,8 +161,9 @@ const OrderBox = styled.div`
   @media only screen and (min-width: 551px) {
     flex-direction: row;
     height: fit-content;
-    justify-content: center;
+    justify-content: start;
     flex-wrap: wrap;
+    padding-left: 2rem;
   }
 `;
 
@@ -125,6 +180,7 @@ const EmptyParaDiv = styled.div`
 
 const AllOrders = () => {
   const dispatch = useDispatch();
+  const [showAddNew, setShowAddNew] = useState(false);
   const [orders, setOrders] = useState(null);
   const [inpValue, setInpValue] = useState("init");
   const [searchResultArray, setSearchResultArray] = useState([]);
@@ -206,12 +262,23 @@ const AllOrders = () => {
     setSearchResultArray(filteredArray);
     console.log(filteredArray);
   };
+  const addNewOrderShowHandler = () => {
+    setShowAddNew(!showAddNew);
+  };
+
   return (
     <OuterBox>
+      <AddNewDiv onClick={addNewOrderShowHandler}>
+        <p>+ </p>
+        <span>Add New Order</span>
+      </AddNewDiv>
       {isLoading && <OrderLoader />}
 
       {orders && (
         <MainBox>
+          {showAddNew && (
+            <AddNewOrder addNewOrderShowHandler={addNewOrderShowHandler} />
+          )}
           <HeaderBox>
             <HeadingAndFilterBox>
               <h2>All Orders</h2>
@@ -220,7 +287,7 @@ const AllOrders = () => {
                 id="searchFilter"
                 onChange={getSelectValueHandler}
               >
-                <option value="" disabled selected>
+                <option value="" disabled defaultValue>
                   Search By
                 </option>
                 <Option value="name">Order Name</Option>
@@ -257,13 +324,13 @@ const AllOrders = () => {
           </OrderBox>
         </MainBox>
       )}
-      <button
+      {/* <button
         onClick={() => {
           dispatch({ type: "logout" });
         }}
       >
         Log out
-      </button>
+      </button> */}
     </OuterBox>
   );
 };

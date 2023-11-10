@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import Navbar from "./components/Navbar/Navbar";
-import { Route, Routes } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  redirect,
+  useLocation,
+} from "react-router-dom";
 import AllOrders from "./pages/AllOrders";
 import PendingOrders from "./pages/PendingOrders";
 import DeliveredOrders from "./pages/DeliveredOrders";
@@ -10,6 +16,8 @@ import Login from "./pages/Login";
 import { useDispatch, useSelector } from "react-redux";
 
 const App = () => {
+  const pathname = useLocation().pathname;
+
   const dispatch = useDispatch();
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData"));
@@ -20,11 +28,11 @@ const App = () => {
   const isLoggedIn = useSelector((state) => {
     return state.isLoggedIn;
   });
+
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/login" element={<Login />} />
         {isLoggedIn && (
           <>
             <Route path="/" element={<AllOrders />} />
@@ -35,6 +43,7 @@ const App = () => {
           </>
         )}
         {!isLoggedIn && <Route path="*" element={<Login />} />}
+        {isLoggedIn && <Route path="*" element={<Navigate to="/" />} />}
       </Routes>
     </>
   );

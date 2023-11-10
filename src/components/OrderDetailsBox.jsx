@@ -7,18 +7,18 @@ import WatchLoader from "./Loader/WatchLoader/WatchLoader";
 const MainBox = styled.div`
   text-transform: capitalize;
   animation: 1s fadeIn;
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
   width: 30vw;
   height: fit-content;
-  box-shadow: 0.3rem 0.2rem 0.6rem #dfdfdf;
+  box-shadow: 0.2rem 0.2rem 1rem #e2e2e2;
   padding: 1.4rem;
   border-radius: 1rem;
   position: relative;
 
-  @media only screen and (min-width: 0px) and (max-width: 550px) {
+  @media only screen and (min-width: 0px) and (max-width: 599px) {
     width: 90vw;
   }
-  @media only screen and (min-width: 551px) and (max-width: 1000px) {
+  @media only screen and (min-width: 600px) and (max-width: 1000px) {
     width: 45vw;
   }
   @media only screen and (min-width: 1001px) and (max-width: 1500px) {
@@ -80,13 +80,13 @@ const DeleteAniBox = styled.div`
 `;
 const MenuBarBox = styled.div`
   position: absolute;
-  background-color: #e7e7e7;
+  background-color: #f8f8f8;
+  backface-visibility: hidden;
   top: 1rem;
   right: 1rem;
   z-index: 2;
   width: 40%;
   height: 47%;
-
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
@@ -100,8 +100,9 @@ const MenuBarBox = styled.div`
     display: block;
     font-size: 1.3rem;
     padding: 0.7rem 0;
-    margin: 0.4rem 0;
+    margin-top: 0.4rem;
     display: flex;
+    border-radius: 1rem;
     justify-content: center;
     align-items: center;
     gap: 0.9rem;
@@ -190,7 +191,7 @@ const OrderStatusBox = styled.div`
   grid-template-columns: 2fr 1fr;
 `;
 const StatusBox = styled.div`
-  background-color: #e5e5e5;
+  background-color: #f1f1f1;
   padding: 0.8rem 0rem;
   display: flex;
   justify-content: center;
@@ -206,7 +207,7 @@ const OptionBox = styled.div`
   display: flex;
   justify-content: center;
   div {
-    background-color: #e5e5e5;
+    background-color: #f3f3f3;
     padding: 0.7rem 3rem;
     border-radius: 1rem;
     display: flex;
@@ -237,7 +238,7 @@ const OrderDetailsBox = (props) => {
     }
     setShowDeleteAni(false);
   };
-  const orederStatusChanger = async () => {
+  const orderStatusChanger = async () => {
     setShowMenu(false);
     setWacthAni(true);
     const res = await fetch(`${EnvVariables.BASE_URL}/order/edit`, {
@@ -270,7 +271,7 @@ const OrderDetailsBox = (props) => {
           <span onClick={menuButtonHandler}>
             <i className="fas fa-times"></i>
           </span>
-          <div onClick={orederStatusChanger}>
+          <div onClick={orderStatusChanger}>
             {order.status === "pending" && <i className="fas fa-check"></i>}
             {order.status === "pending" && "Delivered"}
             {order.status !== "pending" && <i className="fas fa-clock"></i>}
@@ -282,7 +283,7 @@ const OrderDetailsBox = (props) => {
         </MenuBarBox>
       )}
       <HeaderBox>
-        <StatusIconDiv clr={order.status === "pending" ? "#ff3b3b" : "green"}>
+        <StatusIconDiv clr={order.status === "pending" ? "#ffb300" : "green"}>
           {order.status === "pending" ? (
             <i className="fas fa-truck"></i>
           ) : (
@@ -316,13 +317,13 @@ const OrderDetailsBox = (props) => {
         </DetailLineBox>
       </DetailsBox>
       <OrderStatusBox>
-        <StatusBox clr={order.status === "pending" ? "red" : "green"}>
+        <StatusBox clr={order.status === "pending" ? "#e31f1f" : "#3a946d"}>
           {order.status === "pending" ? "Waiting for delivery" : "Delivered"}
         </StatusBox>
         <OptionBox>
           <div>
             {order.status === "pending" ? (
-              <i className="fas fa-check" onClick={orederStatusChanger}></i>
+              <i className="fas fa-check" onClick={orderStatusChanger}></i>
             ) : (
               <i className="fas fa-trash" onClick={orderDeleter}></i>
             )}

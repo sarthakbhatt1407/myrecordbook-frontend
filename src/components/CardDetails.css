@@ -1,0 +1,54 @@
+.Hdfc {
+  background: rgb(10, 143, 246);
+  background: linear-gradient(
+    121deg,
+    rgba(10, 143, 246, 1) 0%,
+    rgba(10, 143, 246, 1) 16%,
+    rgba(0, 212, 255, 1) 60%
+  );
+}
+.Bob {
+  background: rgb(244, 96, 56);
+  background: linear-gradient(
+    121deg,
+    rgba(244, 96, 56, 1) 0%,
+    rgba(244, 96, 56, 1) 16%,
+    rgba(244, 96, 56, 1) 60%
+  );
+}
+.Axis {
+  background: rgb(213, 81, 124);
+  background: linear-gradient(
+    121deg,
+    rgba(213, 81, 124, 1) 0%,
+    rgba(213, 81, 124, 1) 16%,
+    rgba(213, 81, 124, 1) 60%
+  );
+}
+.Sbi {
+  background: rgb(32, 178, 107);
+  background: linear-gradient(
+    121deg,
+    rgba(32, 178, 107, 1) 0%,
+    rgba(32, 178, 107, 1) 16%,
+    rgba(32, 178, 107, 1) 60%
+  );
+}
+.Kotak {
+  background: rgb(182, 45, 62);
+  background: linear-gradient(
+    121deg,
+    rgba(182, 45, 62, 1) 0%,
+    rgba(182, 45, 62, 1) 16%,
+    rgba(182, 45, 62, 1) 60%
+  );
+}
+.Icici {
+  background: rgb(240, 102, 57);
+  background: linear-gradient(
+    121deg,
+    rgba(240, 102, 57, 1) 0%,
+    rgba(182, 45, 62, 1) 40%,
+    rgb(88, 50, 50) 99%
+  );
+}

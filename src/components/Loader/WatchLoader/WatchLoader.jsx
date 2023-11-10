@@ -3,7 +3,7 @@ import "./WatchLoader.css";
 const WatchLoader = () => {
   return (
     <div>
-      <span class="watchLoader"></span>
+      <span className="watchLoader"></span>
     </div>
   );
 };

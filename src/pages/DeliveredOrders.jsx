@@ -4,10 +4,61 @@ import { useDispatch, useSelector } from "react-redux";
 import OrderLoader from "../components/Loader/OrderLoader/OrderLoader";
 import { EnvVariables } from "../data";
 import OrderDetailsBox from "../components/OrderDetailsBox";
-
-const OuterBox = styled.div``;
+import AddNewOrder from "../components/AddNewOrder";
+const OuterBox = styled.div`
+  position: relative;
+  overflow: auto;
+`;
+const AddNewDiv = styled.div`
+  position: absolute;
+  backface-visibility: hidden;
+  bottom: 2%;
+  right: 4%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  background-color: #388def;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  animation: 2s zoomInRight;
+  color: white;
+  transition: 0.8s all;
+  overflow: hidden;
+  cursor: pointer;
+  @media only screen and (min-width: 700px) and (max-width: 2200px) {
+    width: 6rem;
+    height: 6rem;
+  }
+  &:hover {
+    width: 15rem;
+    border-radius: 1.2rem;
+    span {
+      display: block;
+      font-size: 1.4rem;
+      animation: 1.5s fadeIn;
+    }
+    p {
+      display: none;
+    }
+  }
+  span {
+    display: none;
+  }
+  p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+  }
+`;
 const MainBox = styled.div`
   padding: 1rem;
+  height: 92vh;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const HeaderBox = styled.div`
   display: flex;
@@ -24,6 +75,10 @@ const HeadingAndFilterBox = styled.div`
   h2 {
     letter-spacing: 0.1rem;
     font-weight: 650;
+    @media only screen and (max-width: 500px) {
+      font-size: 1.92rem;
+      letter-spacing: 0.09rem;
+    }
   }
   display: flex;
   justify-content: space-between;
@@ -107,7 +162,7 @@ const OrderBox = styled.div`
   @media only screen and (min-width: 551px) {
     flex-direction: row;
     height: fit-content;
-    justify-content: center;
+    justify-content: start;
     flex-wrap: wrap;
   }
 `;
@@ -150,7 +205,12 @@ const DeliveredOrders = () => {
       setIsLoading(false);
       setOrders(data.orders.reverse());
       if (inpValue === "init") {
-        setSearchResultArray(data.orders);
+        const arr = data.orders.filter((ord) => {
+          if (ord.status === "delivered") {
+            return ord;
+          }
+        });
+        setSearchResultArray(arr);
         setInpValue("loaded");
       }
     };
@@ -206,12 +266,24 @@ const DeliveredOrders = () => {
     setSearchResultArray(filteredArray);
     console.log(filteredArray);
   };
+  const [showAddNew, setShowAddNew] = useState(false);
+  const addNewOrderShowHandler = () => {
+    setShowAddNew(!showAddNew);
+  };
+
   return (
     <OuterBox>
       {isLoading && <OrderLoader />}
-
+      <AddNewDiv onClick={addNewOrderShowHandler}>
+        <p>+ </p>
+        <span>Add New Order</span>
+      </AddNewDiv>
       {orders && (
         <MainBox>
+          {" "}
+          {showAddNew && (
+            <AddNewOrder addNewOrderShowHandler={addNewOrderShowHandler} />
+          )}
           <HeaderBox>
             <HeadingAndFilterBox>
               <h2>Delivered Orders</h2>
@@ -259,13 +331,6 @@ const DeliveredOrders = () => {
           </OrderBox>
         </MainBox>
       )}
-      <button
-        onClick={() => {
-          dispatch({ type: "logout" });
-        }}
-      >
-        Log out
-      </button>
     </OuterBox>
   );
 };
