@@ -4,8 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { EnvVariables } from "../data";
 import styled from "styled-components";
 import CardDetails from "../components/CardDetails";
-
-const MainBox = styled.div``;
+import AddNewCard from "../components/AddNewCard";
+const OuterBox = styled.div`
+  position: relative;
+`;
+const MainBox = styled.div`
+  height: 90vh;
+`;
 const HeaderBox = styled.div`
   display: flex;
 
@@ -73,7 +78,8 @@ const CardsBox = styled.div`
   gap: 2rem;
   padding: 1rem 1rem;
   flex-wrap: wrap;
-  @media only screen and (max-width: 580px) {
+
+  @media only screen and (max-width: 660px) {
     flex-direction: column;
   }
 `;
@@ -87,12 +93,60 @@ const EmptyParaDiv = styled.div`
   align-items: center;
   letter-spacing: 0.2rem;
 `;
+const AddNewDiv = styled.div`
+  position: absolute;
+  backface-visibility: hidden;
+  top: 0.8vh;
+  right: 3vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  background-color: #388def;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  animation: 2s zoomInRight;
+  color: white;
+  transition: 0.5s all;
+  overflow: hidden;
+  cursor: pointer;
+
+  @media only screen and (min-width: 501px) and (max-width: 2200px) {
+    right: 3vw;
+    top: 80vh;
+    bottom: 0;
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+  &:hover {
+    width: 15rem;
+    border-radius: 1.2rem;
+    span {
+      display: block;
+      font-size: 1.4rem;
+      animation: 0.7s zoomIn;
+    }
+    p {
+      display: none;
+    }
+  }
+  span {
+    display: none;
+  }
+  p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+  }
+`;
 
 const AllCards = () => {
   const userId = useSelector((state) => {
     return state.userId;
   });
   const dispatch = useDispatch();
+  const [showAddNew, setShowAddNew] = useState(false);
   const [cardLoading, setCardLoading] = useState(true);
   const [cards, setCards] = useState(null);
   const [filteredCards, setFilteredCards] = useState(null);
@@ -111,7 +165,7 @@ const AllCards = () => {
       });
       const data = await res.json();
       // console.log(data.cards);
-      setCards(data.cards);
+      setCards(data.cards.reverse());
       setFilteredCards(data.cards);
       setCardLoading(false);
     };
@@ -131,44 +185,59 @@ const AllCards = () => {
   const refresher = () => {
     window.location.reload(false);
   };
+  const addNewOrderShowHandler = () => {
+    setShowAddNew(!showAddNew);
+  };
 
   return (
-    <MainBox>
-      {cardLoading && <CreditCardLoader />}
-      {!cardLoading && (
-        <>
-          <HeaderBox>
-            <h3>Your Cards</h3>
-            <InpAndIconBox>
-              <InpBox>
-                <Icon className="fas fa-search"></Icon>
-                <Input
-                  type="number"
-                  placeholder="Search Your Card...."
-                  id="searchInp"
-                  onChange={onChangeHandler}
-                />
-              </InpBox>
-            </InpAndIconBox>
-          </HeaderBox>
-          <CardsBox>
-            {cards &&
-              filteredCards.map((card) => {
-                return (
-                  <CardDetails
-                    card={card}
-                    key={card.id}
-                    refresher={refresher}
-                  />
-                );
-              })}
-            {cards && filteredCards.length === 0 && (
-              <EmptyParaDiv>No Card Found...</EmptyParaDiv>
-            )}
-          </CardsBox>
-        </>
+    <OuterBox>
+      {showAddNew && (
+        <AddNewCard addNewOrderShowHandler={addNewOrderShowHandler} />
       )}
-    </MainBox>
+      <MainBox>
+        <AddNewDiv onClick={addNewOrderShowHandler}>
+          <p>+ </p>
+          <span>Add New Card</span>
+        </AddNewDiv>
+        {cardLoading && <CreditCardLoader />}
+        {!cardLoading && (
+          <>
+            <HeaderBox>
+              <h3>Your Cards</h3>
+              <InpAndIconBox>
+                <InpBox>
+                  <Icon className="fas fa-search"></Icon>
+                  <Input
+                    type="number"
+                    placeholder="Search Your Card...."
+                    id="searchInp"
+                    onChange={onChangeHandler}
+                  />
+                </InpBox>
+              </InpAndIconBox>
+            </HeaderBox>
+            {!showAddNew && (
+              <CardsBox>
+                {cards &&
+                  filteredCards.map((card) => {
+                    return (
+                      <CardDetails
+                        card={card}
+                        key={card.id}
+                        refresher={refresher}
+                        showRed={true}
+                      />
+                    );
+                  })}
+                {cards && filteredCards.length === 0 && (
+                  <EmptyParaDiv>No Card Found...</EmptyParaDiv>
+                )}
+              </CardsBox>
+            )}
+          </>
+        )}
+      </MainBox>
+    </OuterBox>
   );
 };
 

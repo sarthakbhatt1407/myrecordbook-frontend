@@ -21,7 +21,7 @@ const MainBox = styled.div`
   animation: 0.5s zoomIn;
   padding: 2rem;
   z-index: 10;
-  width: 84%;
+  width: 37rem;
   height: 55%;
   position: relative;
   background-color: white;

@@ -12,8 +12,8 @@ const OuterBox = styled.div`
 const AddNewDiv = styled.div`
   position: absolute;
   backface-visibility: hidden;
-  bottom: 8%;
-  right: 4%;
+  bottom: 13vh;
+  right: 3vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,9 +27,11 @@ const AddNewDiv = styled.div`
   transition: 0.5s all;
   overflow: hidden;
   cursor: pointer;
+
   @media only screen and (min-width: 700px) and (max-width: 2200px) {
     width: 6rem;
     height: 6rem;
+    bottom: 6vh;
   }
   &:hover {
     width: 15rem;

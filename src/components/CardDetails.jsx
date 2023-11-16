@@ -9,6 +9,7 @@ import sbi from "../assets/images/sbi.png";
 import bob from "../assets/images/bob.png";
 import icici from "../assets/images/icici.png";
 import chip from "../assets/images/chip.png";
+import other from "../assets/images/other.png";
 import nfc from "../assets/images/nfc.svg";
 import { EnvVariables } from "../data";
 import ConfirmationBox from "./ConfirmationBox";
@@ -22,10 +23,10 @@ const MainBox = styled.div`
   box-shadow: 0.4rem 0.4rem 1rem #b5acac;
   position: relative;
   animation: 0.7s zoomIn;
-  @media only screen (max-width: 580px) {
+  @media only screen (max-width: 660px) {
     width: 90vw;
   }
-  @media only screen and (min-width: 581px) and (max-width: 1000px) {
+  @media only screen and (min-width: 661px) and (max-width: 1000px) {
     width: 47vw;
   }
   @media only screen and (min-width: 1001px) and (max-width: 1500px) {
@@ -141,6 +142,9 @@ const KotakImg = styled.img`
 const IciciImg = styled.img`
   width: 8rem;
 `;
+const OtherImg = styled.img`
+  width: 5rem;
+`;
 
 const MenuOptionBox = styled.div`
   position: absolute;
@@ -250,6 +254,7 @@ const CardDetails = (props) => {
           {bankName === "Icici" && <IciciImg src={icici} alt="" />}
           {bankName === "Kotak" && <KotakImg src={kotak} alt="" />}
           {bankName === "Bob" && <BOBImg src={bob} />}
+          {bankName === "Other" && <OtherImg src={other} />}
           <OrderControlDiv onClick={menuHandler}>
             <div></div>
             <div></div>
@@ -273,9 +278,11 @@ const CardDetails = (props) => {
           <ExpiryCvvArrowBox>
             <span>Expiry : {card.expiry}</span>
             <span>Cvv {card.cvv}</span>
-            <Link to={`/user/card/${card.id}`}>
-              <i className="fas fa-arrow-right"></i>
-            </Link>
+            {props.showRed && (
+              <Link to={`/user/card/${card.id}`}>
+                <i className="fas fa-arrow-right"></i>
+              </Link>
+            )}
           </ExpiryCvvArrowBox>
         </DetailsOuterBox>
       </MainBox>

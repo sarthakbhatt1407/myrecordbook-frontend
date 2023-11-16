@@ -154,7 +154,12 @@ const CardFullView = () => {
         <MainBox>
           <LeftSection>
             <CardBox>
-              <CardDetails card={card} key={card.id} refresher={refresher} />
+              <CardDetails
+                card={card}
+                key={card.id}
+                refresher={refresher}
+                showRed={false}
+              />
             </CardBox>
             <CardDetailsListBox>
               <h2>Card Details</h2>

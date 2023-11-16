@@ -1,0 +1,73 @@
+.card {
+  width: 360px;
+  height: 230px;
+  transform: scale(0.8);
+  background: linear-gradient(
+    45deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(0, 140, 177, 1) 35%,
+    rgba(0, 29, 125, 1) 100%
+  );
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 2rem;
+}
+
+.intern {
+  padding: 20px;
+}
+
+.approximation {
+  width: 30px;
+}
+
+.chip {
+  height: 33px;
+  position: relative;
+  left: 87%;
+  bottom: 20px;
+}
+
+.card-number {
+  margin-top: 35px;
+  margin-bottom: 0.7rem;
+  font-size: 1.7rem;
+  letter-spacing: 0.6rem;
+  font-weight: 700;
+  color: white;
+  display: flex;
+}
+.spanHide {
+  visibility: hidden;
+  font-size: 0rem;
+  margin-right: -1rem;
+}
+.spanHideBank {
+  visibility: hidden;
+  font-size: 0rem;
+}
+
+.card-holder {
+  color: whitesmoke;
+}
+
+.card label {
+  font-size: 1.2rem;
+}
+
+.card-infos {
+  display: flex;
+  width: 40%;
+  justify-content: space-between;
+  color: white;
+}
+@media only screen and (min-width: 650px) and (max-width: 1200px) {
+  .card {
+    transform: scale(1);
+  }
+}
+@media only screen and (min-width: 1201px) and (max-width: 5000px) {
+  .card {
+    margin: 0 auto;
+    transform: scale(1.1);
+  }
+}

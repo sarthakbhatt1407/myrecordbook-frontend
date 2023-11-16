@@ -52,3 +52,12 @@
     rgb(88, 50, 50) 99%
   );
 }
+.Other {
+  background: rgb(79, 157, 148);
+  background: linear-gradient(
+    121deg,
+    rgb(118, 171, 165) 0%,
+    rgb(50, 143, 132) 39%,
+    rgba(79, 157, 148, 1) 99%
+  );
+}
