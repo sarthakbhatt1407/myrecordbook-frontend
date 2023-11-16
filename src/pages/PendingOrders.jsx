@@ -293,7 +293,7 @@ const PendingOrders = () => {
                 id="searchFilter"
                 onChange={getSelectValueHandler}
               >
-                <option value="" disabled selected>
+                <option value="" disabled defaultValue>
                   Search By
                 </option>
                 <Option value="name">Order Name</Option>
@@ -326,9 +326,6 @@ const PendingOrders = () => {
                   );
                 }
               })}
-            {searchResultArray.length === 0 && (
-              <EmptyParaDiv>No Order Found ...</EmptyParaDiv>
-            )}
             {searchResultArray.length === 0 && (
               <EmptyParaDiv>No Order Found ...</EmptyParaDiv>
             )}

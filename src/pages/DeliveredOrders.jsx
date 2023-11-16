@@ -292,7 +292,7 @@ const DeliveredOrders = () => {
                 id="searchFilter"
                 onChange={getSelectValueHandler}
               >
-                <option value="" disabled selected>
+                <option value="" disabled defaultValue>
                   Search By
                 </option>
                 <Option value="name">Order Name</Option>

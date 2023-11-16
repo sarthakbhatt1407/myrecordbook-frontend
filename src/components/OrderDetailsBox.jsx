@@ -4,6 +4,7 @@ import "animate.css";
 import { EnvVariables } from "../data";
 import DeleteLoader from "./Loader/DeleteLoader/DeleteLoader";
 import WatchLoader from "./Loader/WatchLoader/WatchLoader";
+import ConfirmationBox from "./ConfirmationBox";
 const MainBox = styled.div`
   text-transform: capitalize;
   animation: 1s fadeIn;
@@ -212,6 +213,9 @@ const OptionBox = styled.div`
     border-radius: 1rem;
     display: flex;
     justify-content: center;
+    i {
+      cursor: pointer;
+    }
   }
 `;
 
@@ -253,8 +257,22 @@ const OrderDetailsBox = (props) => {
       props.refresher();
     }
   };
+  const [showConfirm, setShowConfirm] = useState(false);
+  const confirmBoxHandler = () => {
+    if (showMenu === true) {
+      setShowMenu(false);
+    }
+    setShowConfirm(!showConfirm);
+  };
+
   return (
     <MainBox>
+      {showConfirm && (
+        <ConfirmationBox
+          confirmBoxHandler={confirmBoxHandler}
+          cardDeleter={orderDeleter}
+        />
+      )}
       {showDeleteAni && (
         <DeleteAniBox>
           <DeleteLoader />
@@ -277,7 +295,7 @@ const OrderDetailsBox = (props) => {
             {order.status !== "pending" && <i className="fas fa-clock"></i>}
             {order.status !== "pending" && "Pending"}
           </div>
-          <div onClick={orderDeleter}>
+          <div onClick={confirmBoxHandler}>
             <i className="fas fa-trash"></i>Delete
           </div>
         </MenuBarBox>
@@ -325,7 +343,7 @@ const OrderDetailsBox = (props) => {
             {order.status === "pending" ? (
               <i className="fas fa-check" onClick={orderStatusChanger}></i>
             ) : (
-              <i className="fas fa-trash" onClick={orderDeleter}></i>
+              <i className="fas fa-trash" onClick={confirmBoxHandler}></i>
             )}
           </div>
         </OptionBox>

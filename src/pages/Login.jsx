@@ -176,8 +176,9 @@ const Login = () => {
             <div className="content">
               <h3>My RecordBook</h3>
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Debitis, ex ratione. Aliquid!
+                Replace your traditional way of managing orders and cards with
+                recordbook online solution. Just create and manage orders and
+                cards on the go.
               </p>
               <button className="btn transparent signupBtn" id="sign-up-btn">
                 Sign up

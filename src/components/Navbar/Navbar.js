@@ -3,14 +3,26 @@ import "../Navbar/Navbar.css";
 import logo from "../../assets/images/RecordBook.png";
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Logo = styled.img`
   width: 20rem;
 `;
+const LogOutBtn = styled.button`
+  background-color: #388def;
+  padding: 1rem 2.5rem;
+  border-radius: 2rem;
+  color: white;
+  outline: none;
+  border: none;
+  font-size: 1.5rem;
+  letter-spacing: 0.2rem;
+  font-weight: 600;
+`;
 
 function Navbar() {
   const location = useLocation().pathname;
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const [active, setActive] = useState("nav__menu");
   const [icon, setIcon] = useState("nav__toggler");
@@ -71,6 +83,23 @@ function Navbar() {
               to="/user/all-cards"
             >
               Cards
+            </Link>
+          </li>
+          <li className="nav__item">
+            <Link
+              className={
+                location === "/user/all-cards" ? "activeLink" : "nav_link"
+              }
+              onClick={navToggle}
+              to="/"
+            >
+              <LogOutBtn
+                onClick={() => {
+                  dispatch({ type: "logout" });
+                }}
+              >
+                Log Out
+              </LogOutBtn>
             </Link>
           </li>
         </ul>
